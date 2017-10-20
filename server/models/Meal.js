@@ -54,7 +54,8 @@ const propagateToUsers = async function() {
         _id: { $in: this.registeredGuests },
         registeredMeals: { $ne: this._id }
       },
-      { $push: { registeredMeals: this._id } }
+      { $push: { registeredMeals: this._id } },
+      { multi: true }
     )
   ]);
 };
@@ -69,7 +70,8 @@ const removeFromUsers = async function() {
       .model("User")
       .update(
         { _id: { $in: this.registeredGuests } },
-        { $pull: { registeredMeals: this._id } }
+        { $pull: { registeredMeals: this._id } },
+        { multi: true }
       )
   ]);
 };
